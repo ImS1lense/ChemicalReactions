@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Химические реакции</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Minecraft Rus', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            animation: fadeIn 1s;
+            text-shadow: 0 0 10px #bbb;
+            transition: transform 0.3s;
+        }
+        h1:hover {
+            transform: scale(1.1);
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .navbar {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .navbar button {
+            background-color: #5e5e5e94;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            margin: 5px;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+        .navbar button:hover {
+            background-color: #555;
+            transform: scale(1.05);
+            box-shadow: 0 0 10px #bbb;
+        }
+        .reaction-list {
+            margin-top: 20px;
+            max-height: 600px;
+            overflow-y: auto;
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background-color: #2a2a2a;
+        }
+        .reaction-list h2 {
+            margin-top: 0;
+            text-align: center;
+            text-shadow: 0 0 10px #bbb;
+            animation: glow 1.5s infinite alternate;
+        }
+        .reaction {
+            margin: 5px 0;
+            font-size: 18px;
+            text-shadow: 0 0 5px #4b33d3;
+            transition: background-color 0.3s, transform 0.3s;
+            padding: 5px;
+            border-radius: 3px;
+        }
+        .reaction:hover {
+            background-color: #444;
+            transform: scale(1.02);
+            cursor: pointer;
+        }
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100px;
+            transition: transform 0.3s;
+        }
+        .logo:hover {
+            transform: scale(1.1);
+        }
+        .about {
+            display: none;
+            text-align: center;
+            animation: fadeIn 1s;
+        }
+        .avatar {
+            width: 150px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .avatar:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px #5c5c5c;
+        }
+        .about h2,
+        .about p {
+            text-shadow: 0 0 25px #424dc9;
+            animation: glow 1.5s infinite alternate;
+        }
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 10px #bbb;
+            }
+            100% {
+                text-shadow: 0 0 25px #424dc9;
+            }
+        }
+    </style>
+</head>
+<body>
+    <img src="s1lensedev.png" alt="Логотип" class="logo">
+    <div class="navbar">
+        <button onclick="showAbout()">Обо мне</button>
+        <button onclick="showMain()">Главная</button>
+    </div>
+
+    <div class="container">
+        <div id="reactionArea">
+            <div class="reaction-list">
+                <h2>Список химических реакций</h2>
+                <div class="reaction" onclick="selectReaction('H + O → 2H₂O')">1. H + O → 2H₂O</div>
+                <div class="reaction" onclick="selectReaction('C + O → CO₂')">2. C + O → CO₂</div>
+                <div class="reaction" onclick="selectReaction('Na + Cl → NaCl')">3. Na + Cl → NaCl</div>
+                <div class="reaction" onclick="selectReaction('Fe + O → 4Fe + 3O₂ → 2Fe₂O₃')">4. Fe + O → 4Fe + 3O₂ → 2Fe₂O₃</div>
+                <div class="reaction" onclick="selectReaction('Ca + H₂O → Ca(OH)₂ + H₂')">5. Ca + H₂O → Ca(OH)₂ + H₂</div>
+                <div class="reaction" onclick="selectReaction('K + H₂O → KOH + H₂')">6. K + H₂O → KOH + H₂</div>
+                <div class="reaction" onclick="selectReaction('Mg + O → 2Mg + O₂ → 2MgO')">7. Mg + O → 2Mg + O₂ → 2MgO</div>
+                <div class="reaction" onclick="selectReaction('Al + O → 4Al + 3O₂ → 2Al₂O₃')">8. Al + O → 4Al + 3O₂ → 2Al₂O₃</div>
+                <div class="reaction" onclick="selectReaction('H + Cl → HCl')">9. H + Cl → HCl</div>
+                <div class="reaction" onclick="selectReaction('S + O → SO₂')">10. S + O → SO₂</div>
+                <div class="reaction" onclick="selectReaction('Na + O → Na₂O')">11. Na + O → Na₂O</div>
+                <div class="reaction" onclick="selectReaction('Ca + O → CaO')">12. Ca + O → CaO</div>
+                <div class="reaction" onclick="selectReaction('C + Cl₂ → CCl₄')">13. C + Cl₂ → CCl₄</div>
+                <div class="reaction" onclick="selectReaction('P + O₂ → P₂O₅')">14. P + O₂ → P₂O₅</div>
+                <div class="reaction" onclick="selectReaction('Zn + S → ZnS')">15. Zn + S → ZnS</div>
+                <div class="reaction" onclick="selectReaction('H₂ + S → H₂S')">16. H₂ + S → H₂S</div>
+                <div class="reaction" onclick="selectReaction('Al + Cl₂ → AlCl₃')">17. Al + Cl₂ → AlCl₃</div>
+                <div class="reaction" onclick="selectReaction('Si + O₂ → SiO₂')">18. Si + O₂ → SiO₂</div>
+                <div class="reaction" onclick="selectReaction('Zn + Cl₂ → ZnCl₂')">19. Zn + Cl₂ → ZnCl₂</div>
+                <div class="reaction" onclick="selectReaction('Ag + O → Ag₂O')">20. Ag + O → Ag₂O</div>
+                <div class="reaction" onclick="selectReaction('Fe + S → FeS')">21. Fe + S → FeS</div>
+                <div class="reaction" onclick="selectReaction('K + Cl₂ → KCl')">22. K + Cl₂ → KCl</div>
+                <div class="reaction" onclick="selectReaction('Na + S → Na₂S')">23. Na + S → Na₂S</div>
+                <div class="reaction" onclick="selectReaction('Ca + Cl₂ → CaCl₂')">24. Ca + Cl₂ → CaCl₂</div>
+                <div class="reaction" onclick="selectReaction('C + O₂ → CO₂')">25. C + O₂ → CO₂</div>
+                <div class="reaction" onclick="selectReaction('N₂ + O₂ → 2NO')">26. N₂ + O₂ → 2NO</div>
+                <div class="reaction" onclick="selectReaction('N₂ + H₂ → 2NH₃')">27. N₂ + H₂ → 2NH₃</div>
+                <div class="reaction" onclick="selectReaction('H₂ + Cl₂ → 2HCl')">28. H₂ + Cl₂ → 2HCl</div>
+                <div class="reaction" onclick="selectReaction('H₂O + CO₂ → H₂CO₃')">29. H₂O + CO₂ → H₂CO₃</div>
+                <div class="reaction" onclick="selectReaction('C + H₂O → C₂H₆ + O₂')">30. C + H₂O → C₂H₆ + O₂</div>
+                <div class="reaction" onclick="selectReaction('2Na + 2H₂O → 2NaOH + H₂')">31. 2Na + 2H₂O → 2NaOH + H₂</div>
+                <div class="reaction" onclick="selectReaction('2K + 2H₂O → 2KOH + H₂')">32. 2K + 2H₂O → 2KOH + H₂</div>
+                <div class="reaction" onclick="selectReaction('Cu + 2AgNO₃ → Cu(NO₃)₂ + 2Ag')">33. Cu + 2AgNO₃ → Cu(NO₃)₂ + 2Ag</div>
+                <div class="reaction" onclick="selectReaction('H₂SO₄ + 2NaOH → Na₂SO₄ + 2H₂O')">34. H₂SO₄ + 2NaOH → Na₂SO₄ + 2H₂O</div>
+                <div class="reaction" onclick="selectReaction('CaCO₃ + 2HCl → CaCl₂ + H₂O + CO₂')">35. CaCO₃ + 2HCl → CaCl₂ + H₂O + CO₂</div>
+                <div class="reaction" onclick="selectReaction('Ba(OH)₂ + 2HCl → BaCl₂ + 2H₂O')">36. Ba(OH)₂ + 2HCl → BaCl₂ + 2H₂O</div>
+                <div class="reaction" onclick="selectReaction('Mg + 2HCl → MgCl₂ + H₂')">37. Mg + 2HCl → MgCl₂ + H₂</div>
+                <div class="reaction" onclick="selectReaction('2Na + 2H₂O → 2NaOH + H₂')">38. 2Na + 2H₂O → 2NaOH + H₂</div>
+                <div class="reaction" onclick="selectReaction('2K + 2H₂O → 2KOH + H₂')">39. 2K + 2H₂O → 2KOH + H₂</div>
+                <div class="reaction" onclick="selectReaction('P + 3Cl₂ → PCl₃')">40. P + 3Cl₂ → PCl₃</div>
+                <div class="reaction" onclick="selectReaction('H₂ + Br₂ → 2HBr')">41. H₂ + Br₂ → 2HBr</div>
+                <div class="reaction" onclick="selectReaction('C + H₂ → C₂H₂')">42. C + H₂ → C₂H₂</div>
+                <div class="reaction" onclick="selectReaction('H₂ + I₂ → 2HI')">43. H₂ + I₂ → 2HI</div>
+                <div class="reaction" onclick="selectReaction('2H₂O₂ → 2H₂O + O₂')">44. 2H₂O₂ → 2H₂O + O₂</div>
+                <div class="reaction" onclick="selectReaction('FeO + H₂ → Fe + H₂O')">45. FeO + H₂ → Fe + H₂O</div>
+                <div class="reaction" onclick="selectReaction('C₂H₄ + H₂ → C₂H₆')">46. C₂H₄ + H₂ → C₂H₆</div>
+                <div class="reaction" onclick="selectReaction('N₂ + 3H₂ → 2NH₃')">47. N₂ + 3H₂ → 2NH₃</div>
+                <div class="reaction" onclick="selectReaction('C₂H₆ + O₂ → 2CO₂ + 3H₂O')">48. C₂H₆ + O₂ → 2CO₂ + 3H₂O</div>
+                <div class="reaction" onclick="selectReaction('2C + 2H₂ → C₂H₄')">49. 2C + 2H₂ → C₂H₄</div>
+                <div class="reaction" onclick="selectReaction('CuSO₄ + Zn → Cu + ZnSO₄')">50. CuSO₄ + Zn → Cu + ZnSO₄</div>
+                <div class="reaction" onclick="selectReaction('2Fe + 3Cl₂ → 2FeCl₃')">51. 2Fe + 3Cl₂ → 2FeCl₃</div>
+                <div class="reaction" onclick="selectReaction('4Fe + 3O₂ → 2Fe₂O₃')">52. 4Fe + 3O₂ → 2Fe₂O₃</div>
+                <div class="reaction" onclick="selectReaction('2Na + Cl₂ → 2NaCl')">53. 2Na + Cl₂ → 2NaCl</div>
+                <div class="reaction" onclick="selectReaction('Mg + Cl₂ → MgCl₂')">54. Mg + Cl₂ → MgCl₂</div>
+                <div class="reaction" onclick="selectReaction('K + O₂ → K₂O')">55. K + O₂ → K₂O</div>
+                <div class="reaction" onclick="selectReaction('C + H₂O → C₂H₆ + O₂')">56. C + H₂O → C₂H₆ + O₂</div>
+                <div class="reaction" onclick="selectReaction('H₂ + O₂ → 2H₂O')">57. H₂ + O₂ → 2H₂O</div>
+                <div class="reaction" onclick="selectReaction('C₂H₄ + O₂ → 2CO₂ + 2H₂O')">58. C₂H₄ + O₂ → 2CO₂ + 2H₂O</div>
+                <div class="reaction" onclick="selectReaction('Li + H₂O → LiOH + H₂')">59. Li + H₂O → LiOH + H₂</div>
+                <div class="reaction" onclick="selectReaction('Ca + 2H₂O → Ca(OH)₂ + H₂')">60. Ca + 2H₂O → Ca(OH)₂ + H₂</div>
+                <div class="reaction" onclick="selectReaction('Zn + 2HCl → ZnCl₂ + H₂')">61. Zn + 2HCl → ZnCl₂ + H₂</div>
+                <div class="reaction" onclick="selectReaction('Cu + HNO₃ → Cu(NO₃)₂ + NO₂ + H₂O')">62. Cu + HNO₃ → Cu(NO₃)₂ + NO₂ + H₂O</div>
+                <div class="reaction" onclick="selectReaction('H₂ + Cl₂ → 2HCl')">63. H₂ + Cl₂ → 2HCl</div>
+                <div class="reaction" onclick="selectReaction('2H₂O₂ → 2H₂O + O₂')">64. 2H₂O₂ → 2H₂O + O₂</div>
+                <div class="reaction" onclick="selectReaction('2FeO + O₂ → 2Fe₂O₃')">65. 2FeO + O₂ → 2Fe₂O₃</div>
+                <div class="reaction" onclick="selectReaction('C₆H₁₂O₆ + O₂ → 6CO₂ + 6H₂O')">66. C₆H₁₂O₆ + O₂ → 6CO₂ + 6H₂O</div>
+                <div class="reaction" onclick="selectReaction('2Na + Cl₂ → 2NaCl')">67. 2Na + Cl₂ → 2NaCl</div>
+                <div class="reaction" onclick="selectReaction('2Mg + O₂ → 2MgO')">68. 2Mg + O₂ → 2MgO</div>
+                <div class="reaction" onclick="selectReaction('2H₂ + O₂ → 2H₂O')">69. 2H₂ + O₂ → 2H₂O</div>
+                <div class="reaction" onclick="selectReaction('2C + 2H₂ → 2C₂H₄')">70. 2C + 2H₂ → 2C₂H₄</div>
+                <div class="reaction" onclick="selectReaction('H₂ + F₂ → 2HF')">71. H₂ + F₂ → 2HF</div>
+                <div class="reaction" onclick="selectReaction('2Ag + H₂S → Ag₂S + H₂')">72. 2Ag + H₂S → Ag₂S + H₂</div>
+                <div class="reaction" onclick="selectReaction('3C + 2FeO → 2Fe + 3CO')">73. 3C + 2FeO → 2Fe + 3CO</div>
+                <div class="reaction" onclick="selectReaction('2H₂ + O₂ → 2H₂O')">74. 2H₂ + O₂ → 2H₂O</div>
+                <div class="reaction" onclick="selectReaction('H₂ + Cl₂ → 2HCl')">75. H₂ + Cl₂ → 2HCl</div>
+                <div class="reaction" onclick="selectReaction('Ca + 2H₂O → Ca(OH)₂ + H₂')">76. Ca + 2H₂O → Ca(OH)₂ + H₂</div>
+                <div class="reaction" onclick="selectReaction('2K + 2H₂O → 2KOH + H₂')">77. 2K + 2H₂O → 2KOH + H₂</div>
+                <div class="reaction" onclick="selectReaction('Mg + Cl₂ → MgCl₂')">78. Mg + Cl₂ → MgCl₂</div>
+                <div class="reaction" onclick="selectReaction('2Ag + 2HCl → 2AgCl + H₂')">79. 2Ag + 2HCl → 2AgCl + H₂</div>
+                <div class="reaction" onclick="selectReaction('2Na + 2H₂O → 2NaOH + H₂')">80. 2Na + 2H₂O → 2NaOH + H₂</div>
+                <div class="reaction" onclick="selectReaction('2Fe + 3Cl₂ → 2FeCl₃')">81. 2Fe + 3Cl₂ → 2FeCl₃</div>
+                <div class="reaction" onclick="selectReaction('2Mg + O₂ → 2MgO')">82. 2Mg + O₂ → 2MgO</div>
+                <div class="reaction" onclick="selectReaction('Ca + 2H₂O → Ca(OH)₂ + H₂')">83. Ca + 2H₂O → Ca(OH)₂ + H₂</div>
+                <div class="reaction" onclick="selectReaction('H₂ + Cl₂ → 2HCl')">84. H₂ + Cl₂ → 2HCl</div>
+                <div class="reaction" onclick="selectReaction('2C + O₂ → 2CO')">85. 2C + O₂ → 2CO</div>
+                <div class="reaction" onclick="selectReaction('H₂ + O₂ → 2H₂O')">86. H₂ + O₂ → 2H₂O</div>
+                <div class="reaction" onclick="selectReaction('N₂ + 3H₂ → 2NH₃')">87. N₂ + 3H₂ → 2NH₃</div>
+                <div class="reaction" onclick="selectReaction('H₂O + CO₂ → H₂CO₃')">88. H₂O + CO₂ → H₂CO₃</div>
+                <div class="reaction" onclick="selectReaction('2Ag + 2HCl → 2AgCl + H₂')">89. 2Ag + 2HCl → 2AgCl + H₂</div>
+                <div class="reaction" onclick="selectReaction('Zn + 2HCl → ZnCl₂ + H₂')">90. Zn + 2HCl → ZnCl₂ + H₂</div>
+                <div class="reaction" onclick="selectReaction('3C + 2FeO → 2Fe + 3CO')">91. 3C + 2FeO → 2Fe + 3CO</div>
+                <div class="reaction" onclick="selectReaction('2Na + 2H₂O → 2NaOH + H₂')">92. 2Na + 2H₂O → 2NaOH + H₂</div>
+                <div class="reaction" onclick="selectReaction('H₂ + I₂ → 2HI')">93. H₂ + I₂ → 2HI</div>
+                <div class="reaction" onclick="selectReaction('2Fe + 3Cl₂ → 2FeCl₃')">94. 2Fe + 3Cl₂ → 2FeCl₃</div>
+                <div class="reaction" onclick="selectReaction('2Mg + O₂ → 2MgO')">95. 2Mg + O₂ → 2MgO</div>
+                <div class="reaction" onclick="selectReaction('Ca + 2H₂O → Ca(OH)₂ + H₂')">96. Ca + 2H₂O → Ca(OH)₂ + H₂</div>
+                <div class="reaction" onclick="selectReaction('H₂ + Cl₂ → 2HCl')">97. H₂ + Cl₂ → 2HCl</div>
+                <div class="reaction" onclick="selectReaction('2C + O₂ → 2CO')">98. 2C + O₂ → 2CO</div>
+                <div class="reaction" onclick="selectReaction('H₂ + O₂ → 2H₂O')">99. H₂ + O₂ → 2H₂O</div>
+                <div class="reaction" onclick="selectReaction('N₂ + 3H₂ → 2NH₃')">100. N₂ + 3H₂ → 2NH₃</div>
+                <div class="reaction" onclick="selectReaction('H₂O + CO₂ → H₂CO₃')">101. H₂O + CO₂ → H₂CO₃</div>
+                <div class="reaction" onclick="selectReaction('2Ag + 2HCl → 2AgCl + H₂')">102. 2Ag + 2HCl → 2AgCl + H₂</div>
+                <div class="reaction" onclick="selectReaction('Zn + 2HCl → ZnCl₂ + H₂')">103. Zn + 2HCl → ZnCl₂ + H₂</div>
+                <div class="reaction" onclick="selectReaction('3C + 2FeO → 2Fe + 3CO')">104. 3C + 2FeO → 2Fe + 3CO</div>
+                <div class="reaction" onclick="selectReaction('2Na + 2H₂O → 2NaOH + H₂')">105. 2Na + 2H₂O → 2NaOH + H₂</div>
+                <div class="reaction" onclick="selectReaction('H₂ + I₂ → 2HI')">106. H₂ + I₂ → 2HI</div>
+                <div class="reaction" onclick="selectReaction('2Fe + 3Cl₂ → 2FeCl₃')">107. 2Fe + 3Cl₂ → 2FeCl₃</div>
+                <div class="reaction" onclick="selectReaction('2Mg + O₂ → 2MgO')">108. 2Mg + O₂ → 2MgO</div>
+                <div class="reaction" onclick="selectReaction('Ca + 2H₂O → Ca(OH)₂ + H₂')">109. Ca + 2H₂O → Ca(OH)₂ + H₂</div>
+                <div class="reaction" onclick="selectReaction('H₂ + Cl₂ → 2HCl')">110. H₂ + Cl₂ → 2HCl</div>
+                <div class="reaction" onclick="selectReaction('2C + O₂ → 2CO')">111. 2C + O₂ → 2CO</div>
+                <div class="reaction" onclick="selectReaction('H₂ + O₂ → 2H₂O')">112. H₂ + O₂ → 2H₂O</div>
+                <div class="reaction" onclick="selectReaction('N₂ + 3H₂ → 2NH₃')">113. N₂ + 3H₂ → 2NH₃</div>
+                <div class="reaction" onclick="selectReaction('H₂O + CO₂ → H₂CO₃')">114. H₂O + CO₂ → H₂CO₃</div>
+                <div class="reaction" onclick="selectReaction('2Ag + 2HCl → 2AgCl + H₂')">115. 2Ag + 2HCl → 2AgCl + H₂</div>
+                <div class="reaction" onclick="selectReaction('Zn + 2HCl → ZnCl₂ + H₂')">116. Zn + 2HCl → ZnCl₂ + H₂</div>
+                <div class="reaction" onclick="selectReaction('3C + 2FeO → 2Fe + 3CO')">117. 3C + 2FeO → 2Fe + 3CO</div>
+                <div class="reaction" onclick="selectReaction('2Na + 2H₂O → 2NaOH + H₂')">118. 2Na + 2H₂O → 2NaOH + H₂</div>
+                <div class="reaction" onclick="selectReaction('H₂ + I₂ → 2HI')">119. H₂ + I₂ → 2HI</div>
+                <div class="reaction" onclick="selectReaction('2Fe + 3Cl₂ → 2FeCl₃')">120. 2Fe + 3Cl₂ → 2FeCl₃</div>
+                <div class="reaction" onclick="selectReaction('2Mg + O₂ → 2MgO')">121. 2Mg + O₂ → 2MgO</div>
+                <div class="reaction" onclick="selectReaction('Ca + 2H₂O → Ca(OH)₂ + H₂')">122. Ca + 2H₂O → Ca(OH)₂ + H₂</div>
+                <div class="reaction" onclick="selectReaction('H₂ + Cl₂ → 2HCl')">123. H₂ + Cl₂ → 2HCl</div>
+                <div class="reaction" onclick="selectReaction('2C + O₂ → 2CO')">124. 2C + O₂ → 2CO</div>
+                <div class="reaction" onclick="selectReaction('H₂ + O₂ → 2H₂O')">125. H₂ + O₂ → 2H₂O</div>
+                <div class="reaction" onclick="selectReaction('N₂ + 3H₂ → 2NH₃')">126. N₂ + 3H₂ → 2NH₃</div>
+                <div class="reaction" onclick="selectReaction('H₂O + CO₂ → H₂CO₃')">127. H₂O + CO₂ → H₂CO₃</div>
+                <div class="reaction" onclick="selectReaction('2Ag + 2HCl → 2AgCl + H₂')">128. 2Ag + 2HCl → 2AgCl + H₂</div>
+                <div class="reaction" onclick="selectReaction('Zn + 2HCl → ZnCl₂ + H₂')">129. Zn + 2HCl → ZnCl₂ + H₂</div>
+                <div class="reaction" onclick="selectReaction('3C + 2FeO → 2Fe + 3CO')">130. 3C + 2FeO → 2Fe + 3CO</div>
+                <div class="reaction" onclick="selectReaction('2Na + 2H₂O → 2NaOH + H₂')">131. 2Na + 2H₂O → 2NaOH + H₂</div>
+                <div class="reaction" onclick="selectReaction('H₂ + I₂ → 2HI')">132. H₂ + I₂ → 2HI</div>
+                <div class="reaction" onclick="selectReaction('2Fe + 3Cl₂ → 2FeCl₃')">133. 2Fe + 3Cl₂ → 2FeCl₃</div>
+                <div class="reaction" onclick="selectReaction('2Mg + O₂ → 2MgO')">134. 2Mg + O₂ → 2MgO</div>
+                <div class="reaction" onclick="selectReaction('Ca + 2H₂O → Ca(OH)₂ + H₂')">135. Ca + 2H₂O → Ca(OH)₂ + H₂</div>
+                <div class="reaction" onclick="selectReaction('H₂ + Cl₂ → 2HCl')">136. H₂ + Cl₂ → 2HCl</div>
+                <div class="reaction" onclick="selectReaction('2C + O₂ → 2CO')">137. 2C + O₂ → 2CO</div>
+                <div class="reaction" onclick="selectReaction('H₂ + O₂ → 2H₂O')">138. H₂ + O₂ → 2H₂O</div>
+                <div class="reaction" onclick="selectReaction('N₂ + 3H₂ → 2NH₃')">139. N₂ + 3H₂ → 2NH₃</div>
+                <div class="reaction" onclick="selectReaction('H₂O + CO₂ → H₂CO₃')">140. H₂O + CO₂ → H₂CO₃</div>
+                <div class="reaction" onclick="selectReaction('2Ag + 2HCl → 2AgCl + H₂')">141. 2Ag + 2HCl → 2AgCl + H₂</div>
+                <div class="reaction" onclick="selectReaction('Zn + 2HCl → ZnCl₂ + H₂')">142. Zn + 2HCl → ZnCl₂ + H₂</div>
+                <div class="reaction" onclick="selectReaction('3C + 2FeO → 2Fe + 3CO')">143. 3C + 2FeO → 2Fe + 3CO</div>
+                <div class="reaction" onclick="selectReaction('2Na + 2H₂O → 2NaOH + H₂')">144. 2Na + 2H₂O → 2NaOH + H₂</div>
+                <div class="reaction" onclick="selectReaction('H₂ + I₂ → 2HI')">145. H₂ + I₂ → 2HI</div>
+                <div class="reaction" onclick="selectReaction('2Fe + 3Cl₂ → 2FeCl₃')">146. 2Fe + 3Cl₂ → 2FeCl₃</div>
+                <div class="reaction" onclick="selectReaction('2Mg + O₂ → 2MgO')">147. 2Mg + O₂ → 2MgO</div>
+                <div class="reaction" onclick="selectReaction('Ca + 2H₂O → Ca(OH)₂ + H₂')">148. Ca + 2H₂O → Ca(OH)₂ + H₂</div>
+                <div class="reaction" onclick="selectReaction('H₂ + Cl₂ → 2HCl')">149. H₂ + Cl₂ → 2HCl</div>
+                <div class="reaction" onclick="selectReaction('2C + O₂ → 2CO')">150. 2C + O₂ → 2CO</div>
+                <div class="reaction" onclick="selectReaction('H₂ + O₂ → 2H₂O')">151. H₂ + O₂ → 2H₂O</div>
+                <div class="reaction" onclick="selectReaction('N₂ + 3H₂ → 2NH₃')">152. N₂ + 3H₂ → 2NH₃</div>
+                <div class="reaction" onclick="selectReaction('H₂O + CO₂ → H₂CO₃')">153. H₂O + CO₂ → H₂CO₃</div>
+                <div class="reaction" onclick="selectReaction('2Ag + 2HCl → 2AgCl + H₂')">154. 2Ag + 2HCl → 2AgCl + H₂</div>
+                <div class="reaction" onclick="selectReaction('Zn + 2HCl → ZnCl₂ + H₂')">155. Zn + 2HCl → ZnCl₂ + H₂</div>
+                <div class="reaction" onclick="selectReaction('3C + 2FeO → 2Fe + 3CO')">156. 3C + 2FeO → 2Fe + 3CO</div>
+                <div class="reaction" onclick="selectReaction('2Na + 2H₂O → 2NaOH + H₂')">157. 2Na + 2H₂O → 2NaOH + H₂</div>
+                <div class="reaction" onclick="selectReaction('H₂ + I₂ → 2HI')">158. H₂ + I₂ → 2HI</div>
+                <div class="reaction" onclick="selectReaction('2Fe + 3Cl₂ → 2FeCl₃')">159. 2Fe + 3Cl₂ → 2FeCl₃</div>
+                <div class="reaction" onclick="selectReaction('2Mg + O₂ → 2MgO')">160. 2Mg + O₂ → 2MgO</div>
+                <div class="reaction" onclick="selectReaction('Ca + 2H₂O → Ca(OH)₂ + H₂')">161. Ca + 2H₂O → Ca(OH)₂ + H₂</div>
+                <div class="reaction" onclick="selectReaction('H₂ + Cl₂ → 2HCl')">162. H₂ + Cl₂ → 2HCl</div>
+                <div class="reaction" onclick="selectReaction('2C + O₂ → 2CO')">163. 2C + O₂ → 2CO</div>
+                <div class="reaction" onclick="selectReaction('H₂ + O₂ → 2H₂O')">164. H₂ + O₂ → 2H₂O</div>
+                <div class="reaction" onclick="selectReaction('N₂ + 3H₂ → 2NH₃')">165. N₂ + 3H₂ → 2NH₃</div>
+                <div class="reaction" onclick="selectReaction('H₂O + CO₂ → H₂CO₃')">166. H₂O + CO₂ → H₂CO₃</div>
+                <div class="reaction" onclick="selectReaction('2Ag + 2HCl → 2AgCl + H₂')">167. 2Ag + 2HCl → 2AgCl + H₂</div>
+                <div class="reaction" onclick="selectReaction('Zn + 2HCl → ZnCl₂ + H₂')">168. Zn + 2HCl → ZnCl₂ + H₂</div>
+                <div class="reaction" onclick="selectReaction('3C + 2FeO → 2Fe + 3CO')">169. 3C + 2FeO → 2Fe + 3CO</div>
+                <div class="reaction" onclick="selectReaction('2Na + 2H₂O → 2NaOH + H₂')">170. 2Na + 2H₂O → 2NaOH + H₂</div>
+                <div class="reaction" onclick="selectReaction('H₂ + I₂ → 2HI')">171. H₂ + I₂ → 2HI</div>
+                <div class="reaction" onclick="selectReaction('2Fe + 3Cl₂ → 2FeCl₃')">172. 2Fe + 3Cl₂ → 2FeCl₃</div>
+                <div class="reaction" onclick="selectReaction('2Mg + O₂ → 2MgO')">173. 2Mg + O₂ → 2MgO</div>
+                <div class="reaction" onclick="selectReaction('Ca + 2H₂O → Ca(OH)₂ + H₂')">174. Ca + 2H₂O → Ca(OH)₂ + H₂</div>
+                <div class="reaction" onclick="selectReaction('H₂ + Cl₂ → 2HCl')">175. H₂ + Cl₂ → 2HCl</div>
+                <div class="reaction" onclick="selectReaction('2C + O₂ → 2CO')">176. 2C + O₂ → 2CO</div>
+                <div class="reaction" onclick="selectReaction('H₂ + O₂ → 2H₂O')">177. H₂ + O₂ → 2H₂O</div>
+                <div class="reaction" onclick="selectReaction('N₂ + 3H₂ → 2NH₃')">178. N₂ + 3H₂ → 2NH₃</div>
+                <div class="reaction" onclick="selectReaction('H₂O + CO₂ → H₂CO₃')">179. H₂O + CO₂ → H₂CO₃</div>
+                <div class="reaction" onclick="selectReaction('2Ag + 2HCl → 2AgCl + H₂')">180. 2Ag + 2HCl → 2AgCl + H₂</div>
+                <div class="reaction" onclick="selectReaction('Zn + 2HCl → ZnCl₂ + H₂')">181. Zn + 2HCl → ZnCl₂ + H₂</div>
+                <div class="reaction" onclick="selectReaction('3C + 2FeO → 2Fe + 3CO')">182. 3C + 2FeO → 2Fe + 3CO</div>
+                <div class="reaction" onclick="selectReaction('2Na + 2H₂O → 2NaOH + H₂')">183. 2Na + 2H₂O → 2NaOH + H₂</div>
+                <div class="reaction" onclick="selectReaction('H₂ + I₂ → 2HI')">184. H₂ + I₂ → 2HI</div>
+                <div class="reaction" onclick="selectReaction('2Fe + 3Cl₂ → 2FeCl₃')">185. 2Fe + 3Cl₂ → 2FeCl₃</div>
+                <div class="reaction" onclick="selectReaction('2Mg + O₂ → 2MgO')">186. 2Mg + O₂ → 2MgO</div>
+                <div class="reaction" onclick="selectReaction('Ca + 2H₂O → Ca(OH)₂ + H₂')">187. Ca + 2H₂O → Ca(OH)₂ + H₂</div>
+                <div class="reaction" onclick="selectReaction('H₂ + Cl₂ → 2HCl')">188. H₂ + Cl₂ → 2HCl</div>
+                <div class="reaction" onclick="selectReaction('2C + O₂ → 2CO')">189. 2C + O₂ → 2CO</div>
+                <div class="reaction" onclick="selectReaction('H₂ + O₂ → 2H₂O')">190. H₂ + O₂ → 2H₂O</div>
+                <div class="reaction" onclick="selectReaction('N₂ + 3H₂ → 2NH₃')">191. N₂ + 3H₂ → 2NH₃</div>
+                <div class="reaction" onclick="selectReaction('H₂O + CO₂ → H₂CO₃')">192. H₂O + CO₂ → H₂CO₃</div>
+                <div class="reaction" onclick="selectReaction('2Ag + 2HCl → 2AgCl + H₂')">193. 2Ag + 2HCl → 2AgCl + H₂</div>
+                <div class="reaction" onclick="selectReaction('Zn + 2HCl → ZnCl₂ + H₂')">194. Zn + 2HCl → ZnCl₂ + H₂</div>
+                <div class="reaction" onclick="selectReaction('3C + 2FeO → 2Fe + 3CO')">195. 3C + 2FeO → 2Fe + 3CO</div>
+                <div class="reaction" onclick="selectReaction('2Na + 2H₂O → 2NaOH + H₂')">196. 2Na + 2H₂O → 2NaOH + H₂</div>
+                <div class="reaction" onclick="selectReaction('H₂ + I₂ → 2HI')">197. H₂ + I₂ → 2HI</div>
+                <div class="reaction" onclick="selectReaction('2Fe + 3Cl₂ → 2FeCl₃')">198. 2Fe + 3Cl₂ → 2FeCl₃</div>
+                <div class="reaction" onclick="selectReaction('2Mg + O₂ → 2MgO')">199. 2Mg + O₂ → 2MgO</div>
+                <div class="reaction" onclick="selectReaction('Ca + 2H₂O → Ca(OH)₂ + H₂')">200. Ca + 2H₂O → Ca(OH)₂ + H₂</div>
+            </div>
+        </div>
+
+        <!-- тут будет обо мне кароче --> 
+        <div id="about" class="about">
+            <h2>Обо мне</h2>
+            <img src="s1lensedev.png" alt="Аватарка" class="avatar">
+            <p>Привет, я S1lense (S1lense Development) - соло-разработчик приложений,сайтов,плагинов и тд.</p>
+            <p>На этом сайте ты можешь найти 200 химических уравнений,которые тебе очень помогут</p>
+            <p>Если тебе интересно,можешь подписаться на мой телеграм канал - https://t.me/s1lensedoIt </p>
+        </div>
+    </div>
+
+    <script>
+        function selectReaction(reaction) {
+            alert("Вы выбрали реакцию: " + reaction);
+        }
+
+        function showAbout() {
+            document.getElementById('about').style.display = 'block';
+            document.getElementById('reactionArea').style.display = 'none';
+        }
+
+        function showMain() {
+            document.getElementById('about').style.display = 'none';
+            document.getElementById('reactionArea').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
